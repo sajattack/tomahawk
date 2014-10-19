@@ -45,8 +45,12 @@ function(tomahawk_add_library)
         add_library(${target} SHARED ${LIBRARY_SOURCES})
     endif()
 
+    if(UNIX AND NOT APPLE)
+        list(APPEND LIBRARY_QT5_MODULES DBus)
+    endif()
+
     # HACK: add qt modules - every lib should define its own set of modules
-    qt5_use_modules(${target} Core Network Widgets Sql Xml DBus ${LIBRARY_QT5_MODULES})
+    qt5_use_modules(${target} Core Network Widgets Sql Xml ${LIBRARY_QT5_MODULES})
 
     # definitions - can this be moved into set_target_properties below?
     add_definitions(${QT_DEFINITIONS})
